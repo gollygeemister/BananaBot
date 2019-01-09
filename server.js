@@ -6,13 +6,17 @@ const client = new Discord.Client();
 
 client.on('ready', ()=> {
     console.log(`Logged in as ${client.user.tag}!`);
-    client.channels.find(x => x.name === 'test').send('Hello, I\'m connected!');
+    //client.channels.find(x => x.name === 'test').send('Hello, I\'m connected!');
 });
 
 client.on('message', (msg) => {
 
     if (msg.content === "!test"){
-        msg.channel.send(`Hello, ${msg.author}!`)
+        msg.channel.send(`Hello, ${msg.author}!`);
+    }
+
+    if (msg.content === "!roll"){
+        msg.channel.send(`${msg.author} rolled: ` + Math.floor(Math.random() * 101));
     }
 
 });
