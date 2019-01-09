@@ -4,7 +4,8 @@ const Lobby = require('./lobby.js');
 const token = 'NTMyMzYzMTAwMDk2MTY3OTM3.DxbZcQ.-5nE-1-GoNn8vOldTKZgVR_dVQ0';
 
 const client = new Discord.Client();
-lobby = new Lobby();
+
+var lobby = new Lobby();
 
 client.on('ready', ()=> {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -17,14 +18,20 @@ client.on('message', (msg) => {
         msg.channel.send(`Hello, ${msg.author}!`);
     }
 
+    if (msg.content === "!showid"){
+        msg.channel.send(`Your ID is ${msg.author.id}`);
+    }
+
+    ////////////END OF DEBUG COMMANDS///////////
     if (msg.content === "!help"){
         const embed = new Discord.RichEmbed()
-        .setTitle("COMMANDS")
-        .setDescription("All commands available")
-        .addField("!roll", "Roll a number 0-100", true)
-        .addField("!flip", "Flip a coin", true)
-        .addField("!join", "Join lobby for current game", true)
-        .addField("!showall", "Show all players in a lobby", true)
+            .setTitle("COMMANDS")
+            .setDescription("All commands available")
+            .addField("!roll", "Roll a number 0-100", true)
+            .addField("!flip", "Flip a coin", true)
+            .addField("!join", "Join lobby for current game", true)
+            .addField("!showall", "Show all players in a lobby", true)
+        msg.channel.send(embed);
     }
 
     if (msg.content === "!roll"){
@@ -46,6 +53,21 @@ client.on('message', (msg) => {
             lobby.addPlayer(msg.author.id, new Player(msg.author, msg.author.id));
             msg.channel.send(`${msg.author} has joined the lobby`)
         }
+    }
+
+    if (msg.content === "!showall"){
+
+        players = lobby.getAllPlayers;
+
+        const embed = new Discord.RichEmbed()
+            .setTitle("Players")
+            .setDescription("All Players In Lobby")
+        
+        for (i = 0; i < players.length; i++){
+            embed.addField(players[i][1].name,players.Tokens, true);
+        }
+
+        msg.channel.send(embed);
     }
 
 });

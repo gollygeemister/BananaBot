@@ -1,13 +1,13 @@
 const Player = require("./Player.js");
 
-class lobby {
+class Lobby {
 
     constructor(){
         this.players = new Map();
     }
 
     addPlayer(id, player){
-        this.players.set(is, player);
+        this.players.set(id, player);
     }
 
     removePlayer(id){
@@ -31,3 +31,5 @@ class lobby {
     }
 
 }
+
+module.exports = Lobby;

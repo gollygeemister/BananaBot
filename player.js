@@ -5,11 +5,11 @@ class Player {
         this.tokens = 100;
     }
 
-    getTokens() {
+    get Tokens() {
         return this.tokens;
     }
 
-    setToken(value) {
+    set Tokens(value) {
         this.tokens = value;
     }
 
@@ -17,12 +17,13 @@ class Player {
         this.tokens += value;
     }
 
-    getName() {
+    get Name() {
         return this.name;
     }
 
-    getId() {
+    get Id() {
         return this.id;
-    }
-    
+    }   
 }
+
+module.exports = Player;
