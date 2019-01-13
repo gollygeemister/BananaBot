@@ -1,4 +1,5 @@
-function Player(name, id) {
+function Player(author, name, id) {
+    this.author = author;
     this.name = name;
     this.id = id;
     this.tokens = 100;
@@ -19,6 +20,10 @@ Player.prototype.addTokens = function(value){
 Player.prototype.getName = function() {
     return this.name;
 };
+
+Player.prototype.getAuthor = function() {
+    return this.author;
+}
 
 Player.prototype.getId = function() {
     return this.id;
