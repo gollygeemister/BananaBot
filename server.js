@@ -49,22 +49,32 @@ client.on('message', (msg) => {
     }
 
     if (msg.content === "!join") {
-        if(!lobby.playerExists()){
+        if(!lobby.playerExists(msg.author.id)){
             lobby.addPlayer(msg.author.id, new Player(msg.author, msg.author.id));
-            msg.channel.send(`${msg.author} has joined the lobby`)
+            msg.channel.send(`${msg.author} has joined the lobby`);
+        }
+        else{
+            msg.channel.send(`${msg.author} has already joined!`);
+        }
+    }
+
+    if (msg.content === "!show"){
+        if (lobby.playerExists(msg.author.id)){
+            var player = lobby.getPlayer(msg.author.id);
+            msg.channel.send(`${player.getName()} ${player.getTokens()}`);
         }
     }
 
     if (msg.content === "!showall"){
 
-        players = lobby.getAllPlayers;
+        var players = lobby.getAllPlayers();
 
         const embed = new Discord.RichEmbed()
             .setTitle("Players")
-            .setDescription("All Players In Lobby")
+            .setDescription("All Players In Lobby");
         
         for (i = 0; i < players.length; i++){
-            embed.addField(players[i][1].name,players.Tokens, true);
+            embed.addField(players[i][1].name, players[i][1].getTokens, true);
         }
 
         msg.channel.send(embed);
