@@ -9,6 +9,13 @@ var lobby = new Lobby();
 
 const fs = require("fs");
 
+// Returns folders within specified directory
+function getDirectories(path) {
+    return fs.readdirSync(path).filter(function (file) {
+      return fs.statSync(path+'/'+file).isDirectory();
+    });
+  }
+
 // load commands
 client.commands = new Discord.Collection();
 fs.readdir("./commands/", (err, files) => {
@@ -22,7 +29,6 @@ fs.readdir("./commands/", (err, files) => {
         let props = require(`./commands/${f}`);
         client.commands.set(props.help.name, props);
     });
-
 });
 
 client.on('ready', ()=> {
