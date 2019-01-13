@@ -30,6 +30,7 @@ client.on('message', (msg) => {
             .addField("!roll", "Roll a number 0-100", true)
             .addField("!flip", "Flip a coin", true)
             .addField("!join", "Join lobby for current game", true)
+            .addField("!showtokens", "Displays your tokens", true)
             .addField("!showall", "Show all players in a lobby", true)
         msg.channel.send(embed);
     }
@@ -50,7 +51,7 @@ client.on('message', (msg) => {
 
     if (msg.content === "!join") {
         if(!lobby.playerExists(msg.author.id)){
-            lobby.addPlayer(msg.author.id, new Player(msg.author, msg.author.id));
+            lobby.addPlayer(msg.author.id, new Player(msg.author.username, msg.author.id));
             msg.channel.send(`${msg.author} has joined the lobby`);
         }
         else{
@@ -58,25 +59,24 @@ client.on('message', (msg) => {
         }
     }
 
-    if (msg.content === "!show"){
+    if (msg.content === "!showtokens"){
         if (lobby.playerExists(msg.author.id)){
             var player = lobby.getPlayer(msg.author.id);
-            msg.channel.send(`${player.getName()} ${player.getTokens()}`);
+            msg.channel.send(`${player.getAuthor()} has ${player.getTokens()} tokens.`);
         }
     }
 
     if (msg.content === "!showall"){
 
-        var players = lobby.getAllPlayers();
-
         const embed = new Discord.RichEmbed()
             .setTitle("Players")
             .setDescription("All Players In Lobby");
-        
-        for (i = 0; i < players.length; i++){
-            embed.addField(players[i][1].name, players[i][1].getTokens, true);
+        var playerIterator = lobby.getAllPlayers();
+        var player = playerIterator.next();
+        while(!player.done){
+            embed.addField(player.value[1].getName(), `${player.value[1].getTokens()} tokens`, true);
+            player = playerIterator.next();
         }
-
         msg.channel.send(embed);
     }
 
