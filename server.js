@@ -19,6 +19,7 @@ function getDirectories(path) {
 // load commands
 client.commands = new Discord.Collection();
 fs.readdir("./commands/", (err, files) => {
+    console.log(getDirectories("./commands/"));
     if(err) console.log(err);
 
     let jsfiles = files.filter(f => f.split(".").pop() === "js");
